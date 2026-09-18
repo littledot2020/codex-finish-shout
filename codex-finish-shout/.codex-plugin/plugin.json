@@ -1,0 +1,37 @@
+{
+  "name": "codex-finish-shout",
+  "version": "0.11.0",
+  "description": "Monitor live Codex projects and individual agent tasks in open VS Code workspaces, confirm project-wide idle completion, announce it locally, and update an attached ESP32 status display.",
+  "author": {
+    "name": "littledot2020"
+  },
+  "interface": {
+    "displayName": "Codex Finish Shout",
+    "shortDescription": "Project-wide Codex status monitoring with reliable final-completion announcements.",
+    "longDescription": "Combines the official user-level notify event with trusted lifecycle hooks so a turn boundary becomes a candidate rather than an immediate project completion. Every candidate waits for a project-wide quiet window; new prompts, resumed sessions, active subagents, or a newer completion cancel the stale candidate. Live VS Code workspace leases and SessionEnd cleanup remove closed projects, while a periodic full snapshot restores the ESP32 display after reconnect or resume. During settling the monitors stay red, and only the final idle state turns green and announces once.",
+    "developerName": "littledot2020",
+    "category": "Productivity",
+    "capabilities": [
+      "Automatic completion notification",
+      "Per-agent task titles, independent execution states, and parent-child overview",
+      "Hardware-first completion display with desktop fallback",
+      "Centered 2-second fallback firework completion overlay",
+      "Project-wide 10-second quiet-window completion confirmation",
+      "Live workspace presence and SessionEnd cleanup",
+      "Automatic 30-second ESP32 snapshot reconciliation",
+      "One-click Codex Hook trust onboarding with readiness feedback",
+      "ES3C28P six-project red/green status display",
+      "Automatic ESP32 USB Serial/JTAG port detection",
+      "Automatic single-root and multi-root workspace matching",
+      "Lossless serial playback queue for concurrent projects",
+      "Project-name TTS announcement",
+      "Local audio with stop signal",
+      "Configurable one-shot, loop, and timed playback",
+      "VS Code companion stop controls"
+    ],
+    "defaultPrompt": [
+      "Check my Codex completion reminder status.",
+      "Help me change the local completion MP3."
+    ]
+  }
+}

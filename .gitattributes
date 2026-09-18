@@ -1,0 +1,13 @@
+* text=auto
+*.ps1 text eol=crlf
+*.psm1 text eol=crlf
+*.js text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.md whitespace=-blank-at-eol
+*.css text eol=lf
+*.py text eol=lf
+*.yml text eol=lf
+*.mp3 binary
+*.mid binary
+*.png binary

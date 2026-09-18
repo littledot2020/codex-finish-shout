@@ -1,0 +1,47 @@
+name: Test and package
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run test:backend
+      - run: npm run package
+      - run: npm run test:package
+      - run: node scripts/test-host.js 1.90.0
+      - run: node scripts/test-host.js stable
+      - uses: actions/upload-artifact@v4
+        with:
+          name: codex-finish-shout-${{ github.sha }}
+          path: dist/*
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: windows
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: codex-finish-shout-${{ github.sha }}
+          path: dist
+      - name: Create preview release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: gh release create "$RELEASE_TAG" dist/* --prerelease --title "$RELEASE_TAG — Integrated preview / 一体化预览版" --notes-file docs/RELEASE.md

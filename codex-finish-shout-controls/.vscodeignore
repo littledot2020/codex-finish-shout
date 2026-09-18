@@ -1,0 +1,6 @@
+*.vsix
+test/**
+**/*.log
+**/*.tmp
+backend/assets/README.md
+backend/assets/generate-music.py

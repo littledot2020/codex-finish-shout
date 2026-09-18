@@ -1,0 +1,26 @@
+[
+  {
+    "id": "soft-chime",
+    "zh": "轻柔风铃",
+    "en": "Soft chime",
+    "seconds": 2.4,
+    "mp3": "soft-chime.mp3",
+    "midi": "soft-chime.mid"
+  },
+  {
+    "id": "bright-finish",
+    "zh": "明亮完成",
+    "en": "Bright finish",
+    "seconds": 2.2,
+    "mp3": "bright-finish.mp3",
+    "midi": "bright-finish.mid"
+  },
+  {
+    "id": "gentle-rise",
+    "zh": "舒缓上扬",
+    "en": "Gentle rise",
+    "seconds": 3.2,
+    "mp3": "gentle-rise.mp3",
+    "midi": "gentle-rise.mid"
+  }
+]

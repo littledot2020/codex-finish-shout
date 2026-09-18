@@ -1,0 +1,23 @@
+{
+  "name": "codex-finish-shout-development",
+  "version": "0.11.0",
+  "private": true,
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "node scripts/build.js",
+    "test": "npm run build && node --test codex-finish-shout-controls/test/*.test.js",
+    "test:backend": "powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File tests/run-tests.ps1",
+    "test:package": "powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File scripts/test-package.ps1",
+    "package": "node scripts/package.js",
+    "dev:prepare": "node scripts/dev-prepare.js",
+    "dev:simulate": "node scripts/dev-simulate.js",
+    "test:host": "node scripts/test-host.js"
+  },
+  "devDependencies": {
+    "@vscode/test-electron": "3.1.0",
+    "@vscode/vsce": "4.0.0"
+  }
+}

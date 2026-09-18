@@ -1,0 +1,11 @@
+{
+  "version": "0.2.0",
+  "configurations": [{
+    "name": "Codex Finish Shout (isolated development)",
+    "type": "extensionHost",
+    "request": "launch",
+    "args": ["--extensionDevelopmentPath=${workspaceFolder}/codex-finish-shout-controls", "--user-data-dir=${workspaceFolder}/.dev/vscode"],
+    "env": { "CODEX_FINISH_SHOUT_DEV_ROOT": "${workspaceFolder}/.dev/codex" },
+    "preLaunchTask": "Prepare isolated development"
+  }]
+}

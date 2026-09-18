@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 2,
+  "enabled": true,
+  "requiredClient": "VS Code",
+  "mode": "audioFile",
+  "message": "我干完了",
+  "audioFile": "builtin:soft-chime",
+  "fallbackMode": "tts",
+  "volume": 100,
+  "rate": 0,
+  "voiceName": "",
+  "playback": {
+    "mode": "once",
+    "seconds": 30,
+    "maximumSeconds": 3600
+  },
+  "completionGuard": {
+    "enabled": true,
+    "graceSeconds": 10,
+    "lifecycleMode": "require"
+  },
+  "visual": {
+    "enabled": true,
+    "durationMilliseconds": 2000
+  },
+  "projectMonitor": {
+    "maximumProjects": 6
+  },
+  "announcement": {
+    "enabled": true,
+    "template": "项目“{project}”的 Codex 任务已经执行结束，现在开始播放音乐。"
+  },
+  "quietHours": {
+    "enabled": false,
+    "start": "22:00",
+    "end": "08:00"
+  },
+  "hardware": {
+    "enabled": false,
+    "transport": "serial",
+    "port": "",
+    "autoDetect": true,
+    "baudRate": 115200,
+    "timeoutMilliseconds": 1000,
+    "message": "完成",
+    "backgroundColor": "#16A34A",
+    "foregroundColor": "#FFFFFF"
+  }
+}

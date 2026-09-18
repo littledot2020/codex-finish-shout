@@ -1,0 +1,271 @@
+{
+  "name": "codex-finish-shout-controls",
+  "displayName": "%displayName%",
+  "description": "%description%",
+  "version": "0.11.0",
+  "publisher": "littledot2020",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "main": "./extension.js",
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  },
+  "activationEvents": [
+    "onStartupFinished",
+    "onCommand:codexFinishShout.stopMusic",
+    "onCommand:codexFinishShout.openHookAuthorization",
+    "onCommand:codexFinishShout.openProjectMonitor",
+    "onCommand:codexFinishShout.toggleProjectMonitorStatusBar"
+  ],
+  "categories": [
+    "Other"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "codexFinishShout.stopMusic",
+        "title": "%command.stopMusic%",
+        "icon": "$(mute)"
+      },
+      {
+        "command": "codexFinishShout.configurePlayback",
+        "title": "%command.configurePlayback%",
+        "icon": "$(settings-gear)"
+      },
+      {
+        "command": "codexFinishShout.chooseCompletionMusic",
+        "title": "%command.chooseCompletionMusic%",
+        "icon": "$(music)"
+      },
+      {
+        "command": "codexFinishShout.togglePlaybackMode",
+        "title": "%command.togglePlaybackMode%"
+      },
+      {
+        "command": "codexFinishShout.toggleAnnouncement",
+        "title": "%command.toggleAnnouncement%"
+      },
+      {
+        "command": "codexFinishShout.openSettings",
+        "title": "%command.openSettings%"
+      },
+      {
+        "command": "codexFinishShout.openHookAuthorization",
+        "title": "%command.openHookAuthorization%",
+        "icon": "$(shield)"
+      },
+      {
+        "command": "codexFinishShout.openProjectMonitor",
+        "title": "%command.openProjectMonitor%",
+        "icon": "$(dashboard)"
+      },
+      {
+        "command": "codexFinishShout.toggleProjectMonitorStatusBar",
+        "title": "%command.toggleProjectMonitorStatusBar%",
+        "icon": "$(eye)"
+      },
+      {
+        "command": "codexFinishShout.initializeBackend",
+        "title": "%command.initializeBackend%"
+      },
+      {
+        "command": "codexFinishShout.repairBackend",
+        "title": "%command.repairBackend%"
+      },
+      {
+        "command": "codexFinishShout.checkBackend",
+        "title": "%command.checkBackend%"
+      },
+      {
+        "command": "codexFinishShout.uninstallBackend",
+        "title": "%command.uninstallBackend%"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "codexFinishShout.stopMusic",
+        "key": "ctrl+alt+m",
+        "when": "codexFinishShout.playing"
+      },
+      {
+        "command": "codexFinishShout.configurePlayback",
+        "key": "ctrl+alt+p"
+      },
+      {
+        "command": "codexFinishShout.togglePlaybackMode",
+        "key": "ctrl+alt+l"
+      },
+      {
+        "command": "codexFinishShout.toggleAnnouncement",
+        "key": "ctrl+alt+a"
+      }
+    ],
+    "configuration": {
+      "title": "%configuration.title%",
+      "properties": {
+        "codexFinishShout.language": {
+          "type": "string",
+          "scope": "window",
+          "enum": [
+            "auto",
+            "zh",
+            "en"
+          ],
+          "enumDescriptions": [
+            "%language.auto%",
+            "%language.zh%",
+            "%language.en%"
+          ],
+          "default": "auto",
+          "description": "%setting.language%"
+        },
+        "codexFinishShout.projectMonitor.theme": {
+          "type": "string",
+          "scope": "window",
+          "enum": [
+            "auto",
+            "dark",
+            "light"
+          ],
+          "enumDescriptions": [
+            "%theme.auto%",
+            "%theme.dark%",
+            "%theme.light%"
+          ],
+          "default": "auto",
+          "description": "%setting.projectMonitor.theme%"
+        },
+        "codexFinishShout.stateDirectory": {
+          "type": "string",
+          "default": "",
+          "description": "%setting.stateDirectory%"
+        },
+        "codexFinishShout.configPath": {
+          "type": "string",
+          "default": "",
+          "description": "%setting.configPath%"
+        },
+        "codexFinishShout.projectMonitor.showStatusBar": {
+          "type": "boolean",
+          "default": true,
+          "description": "%setting.projectMonitor.showStatusBar%"
+        },
+        "codexFinishShout.playbackMode": {
+          "type": "string",
+          "enum": [
+            "",
+            "once",
+            "loop",
+            "seconds"
+          ],
+          "enumDescriptions": [
+            "%playbackMode.backend%",
+            "%playbackMode.once%",
+            "%playbackMode.loop%",
+            "%playbackMode.seconds%"
+          ],
+          "default": "",
+          "description": "%setting.playbackMode%"
+        },
+        "codexFinishShout.playbackSeconds": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 86400,
+          "default": 0,
+          "description": "%setting.playbackSeconds%"
+        },
+        "codexFinishShout.maximumPlaybackSeconds": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 86400,
+          "default": 0,
+          "description": "%setting.maximumPlaybackSeconds%"
+        },
+        "codexFinishShout.volume": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "default": 100,
+          "description": "%setting.volume%"
+        },
+        "codexFinishShout.announcementEnabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "%setting.announcementEnabled%"
+        },
+        "codexFinishShout.announcementTemplate": {
+          "type": "string",
+          "default": "",
+          "description": "%setting.announcementTemplate%"
+        },
+        "codexFinishShout.announcementRate": {
+          "type": "number",
+          "minimum": -10,
+          "maximum": 10,
+          "default": 0,
+          "description": "%setting.announcementRate%"
+        },
+        "codexFinishShout.completionSound": {
+          "type": "string",
+          "scope": "window",
+          "enum": [
+            "",
+            "soft-chime",
+            "bright-finish",
+            "gentle-rise",
+            "custom"
+          ],
+          "enumDescriptions": [
+            "%sound.backend%",
+            "%sound.soft-chime%",
+            "%sound.bright-finish%",
+            "%sound.gentle-rise%",
+            "%sound.custom%"
+          ],
+          "default": "",
+          "description": "%setting.completionSound%"
+        },
+        "codexFinishShout.audioFile": {
+          "type": "string",
+          "scope": "window",
+          "default": "",
+          "description": "%setting.audioFile%"
+        },
+        "codexFinishShout.promotion.showToolAI": {
+          "type": "boolean",
+          "default": true,
+          "scope": "application",
+          "description": "%setting.promotion.showToolAI%"
+        }
+      }
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/littledot2020/codex-finish-shout.git",
+    "directory": "codex-finish-shout-controls"
+  },
+  "homepage": "https://github.com/littledot2020/codex-finish-shout#readme",
+  "bugs": {
+    "url": "https://github.com/littledot2020/codex-finish-shout/issues"
+  },
+  "icon": "assets/icon.png",
+  "keywords": [
+    "codex",
+    "monitor",
+    "completion",
+    "music",
+    "toolai"
+  ],
+  "extensionKind": [
+    "ui"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": false
+    },
+    "virtualWorkspaces": false
+  }
+}
