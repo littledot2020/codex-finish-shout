@@ -15,6 +15,8 @@ Repository: `littledot2020/codex-finish-shout`. Intended Marketplace publisher: 
 
 The extension README contains both languages in one page; Marketplace does not automatically switch separate README files. GitHub has linked English/Chinese homepages. Never commit tokens. Initial Marketplace publication can use web upload; future automation must follow authentication methods supported by the official guide at that time.
 
+With a registered publisher and local `npx vsce login littledot2020` authentication, run `npm run publish:marketplace`. This verifies the checksum and uploads the existing `dist/` preview package without rebuilding it. When using GitHub CI artifacts, copy the release VSIX and SHA256SUMS.txt into `dist/` first.
+
 Reference: https://code.visualstudio.com/api/working-with-extensions/publishing-extension
 
 ## 简体中文
@@ -29,5 +31,7 @@ Reference: https://code.visualstudio.com/api/working-with-extensions/publishing-
 6. 记录商店地址及验证结果。正式版使用新的版本号，打包时移除预发布标记，且必须先完成手工验收。
 
 扩展 README 在同一页提供完整英文和中文，商店不会自动切换独立的 README。GitHub 使用两个互相链接的首页。令牌不得提交到 Git。首次商店发布可通过网页上传；后续自动化遵循届时官方认证方式。
+
+注册发布者并通过本机 `npx vsce login littledot2020` 认证后，执行 `npm run publish:marketplace`。它校验文件后上传 `dist/` 中已有的预发布包，不重新构建。使用 GitHub CI 产物时，先将 Release 的 VSIX 和 SHA256SUMS.txt 放入 `dist/`。
 
 参考：https://code.visualstudio.com/api/working-with-extensions/publishing-extension

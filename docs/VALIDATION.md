@@ -10,10 +10,13 @@ Automated verification is recorded before publication. It cannot establish audib
 | Promotion language and persistence / 推广语言和持久化 | Unit, Chromium and VS Code host checks passed / 单元、浏览器和宿主验证通过 |
 | Clean Windows account and audible cues / 干净账户实际听音 | Manual check required / 待手工验证 |
 | Installed VS Code 1.136.1 host / 已安装宿主 | Activation, commands, language and promotion settings passed / 激活、命令、语言和推广设置通过 |
-| Minimum VS Code 1.90 / 最低宿主 | Local download timed out; CI check pending / 本机下载超时，等待 CI 验证 |
+| Minimum VS Code 1.90.0 / 最低宿主 | Passed in GitHub Windows CI / GitHub Windows CI 通过 |
+| Stable VS Code 1.138.0 / 当前稳定宿主 | Passed in GitHub Windows CI / GitHub Windows CI 通过 |
 | Real Codex Hook authorization and completion / 真实授权及完成 | Manual check required / 待手工验证 |
 | Marketplace install and upgrade / 商店安装升级 | Requires publication / 待上架后验证 |
 
 Publish as preview until manual acceptance is complete. / 手工验收完成前仅发布预览版。
 
 Chromium checks cover English/Chinese, dark/light/high-contrast themes, keyboard access, and widths from 260 to 1080 px. Screenshots use synthetic tasks. / Chromium 验证覆盖中英文、深浅与高对比主题、键盘操作及 260–1080 像素宽度，截图使用模拟任务。
+
+Verified on 2026-09-18. [Initial successful Windows CI](https://github.com/littledot2020/codex-finish-shout/actions/runs/35352938424). Every release tag reruns these checks before publishing its artifacts. / 验证日期：2026-09-18；每个发布标签重新验证后才发布产物。

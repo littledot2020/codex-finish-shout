@@ -31,15 +31,15 @@ async function main() {
             body: JSON.stringify({ name: 'codex-finish-shout', description: 'Codex project monitor and offline completion music for VS Code. English / 中文. Discover AI tools at ToolAI.io.',
                 homepage: 'https://www.toolai.io/', private: false, auto_init: false }) });
         console.log(created.html_url);
-    } else if (action === 'ci' || action === 'ci-failure') {
+    } else if (['ci', 'ci-failure', 'ci-logs'].includes(action)) {
         const runs = await api(`/repos/${repo}/actions/runs?per_page=5`);
         for (const run of runs.workflow_runs) {
             console.log(JSON.stringify({ id: run.id, sha: run.head_sha.slice(0, 8), status: run.status, conclusion: run.conclusion, url: run.html_url }));
             const jobs = await api(`/repos/${repo}/actions/runs/${run.id}/jobs`);
             for (const job of jobs.jobs) console.log(JSON.stringify({ name: job.name, status: job.status, conclusion: job.conclusion,
                 steps: job.steps.filter(step => step.status !== 'queued').map(step => ({ name: step.name, status: step.status, conclusion: step.conclusion })) }));
-            if (action === 'ci-failure') {
-                for (const job of jobs.jobs.filter(job => job.conclusion === 'failure')) {
+            if (action !== 'ci') {
+                for (const job of jobs.jobs.filter(job => action === 'ci-failure' ? job.conclusion === 'failure' : job.status === 'completed' && job.steps.length)) {
                     const response = await fetch(`https://api.github.com/repos/${repo}/actions/jobs/${job.id}/logs`, { headers, signal: AbortSignal.timeout(60000) });
                     if (!response.ok) throw new Error('Unable to retrieve job log: ' + response.status);
                     const directory = path.join(__dirname, '../.dev');
@@ -50,6 +50,25 @@ async function main() {
                 break;
             }
         }
+    } else if (action === 'download-release') {
+        const version = require('../codex-finish-shout-controls/package.json').version;
+        const release = await api(`/repos/${repo}/releases/tags/v${version}`);
+        const output = path.join(__dirname, '../dist');
+        fs.mkdirSync(output, { recursive: true });
+        const expected = [`codex-finish-shout-controls-${version}-win32-x64.vsix`, 'SHA256SUMS.txt'];
+        for (const name of expected) {
+            const asset = release.assets.find(asset => asset.name === name);
+            if (!asset) throw new Error('Missing release asset: ' + name);
+            const response = await fetch(asset.browser_download_url, { signal: AbortSignal.timeout(60000) });
+            if (!response.ok) throw new Error('Download failed: ' + response.status);
+            fs.writeFileSync(path.join(output, name), Buffer.from(await response.arrayBuffer()));
+            console.log('Downloaded published asset: ' + name);
+        }
+        const checksum = fs.readFileSync(path.join(output, 'SHA256SUMS.txt'), 'utf8').trim().split(/\s+/);
+        const actual = require('node:crypto').createHash('sha256').update(fs.readFileSync(path.join(output, expected[0]))).digest('hex');
+        if (checksum[0] !== actual || checksum[1] !== expected[0]) throw new Error('Published asset checksum mismatch');
+        console.log('Published VSIX checksum verified: ' + actual);
+        console.log(release.html_url);
     } else if (action === 'release') {
         const version = require('../codex-finish-shout-controls/package.json').version;
         const release = await api(`/repos/${repo}/releases`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({

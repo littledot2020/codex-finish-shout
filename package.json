@@ -14,7 +14,8 @@
     "package": "node scripts/package.js",
     "dev:prepare": "node scripts/dev-prepare.js",
     "dev:simulate": "node scripts/dev-simulate.js",
-    "test:host": "node scripts/test-host.js"
+    "test:host": "node scripts/test-host.js",
+    "publish:marketplace": "node scripts/publish-marketplace.js"
   },
   "devDependencies": {
     "@vscode/test-electron": "3.1.0",

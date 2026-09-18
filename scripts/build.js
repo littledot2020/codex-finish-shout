@@ -4,6 +4,13 @@ const root = path.resolve(__dirname, '..');
 const extension = path.join(root, 'codex-finish-shout-controls');
 const backend = path.join(root, 'codex-finish-shout');
 const manifest = JSON.parse(fs.readFileSync(path.join(extension, 'package.json'), 'utf8'));
+function cleanGenerated(relative) {
+    const target = path.resolve(extension, relative);
+    if (!['backend', 'assets/music'].includes(relative) || !target.startsWith(extension + path.sep)) {
+        throw new Error('Refusing to clean outside the generated extension directories');
+    }
+    fs.rmSync(target, { recursive: true, force: true });
+}
 function copyTree(source, target) {
     fs.mkdirSync(target, { recursive: true });
     for (const entry of fs.readdirSync(source, { withFileTypes: true })) {
@@ -13,6 +20,8 @@ function copyTree(source, target) {
     }
 }
 // Copy only audited runtime sources. Generated directories are ignored by Git.
+cleanGenerated('backend');
+cleanGenerated('assets/music');
 for (const directory of ['scripts', 'config', 'assets']) {
     copyTree(path.join(backend, directory), path.join(extension, 'backend', directory));
 }
@@ -25,6 +34,7 @@ function marketplaceSection(filename) {
         .replace(/^# Codex Finish Shout\r?\n/, '')
         .replace(/^\[English\].*\r?\n/m, '')
         .replace(/^## /gm, '### ')
+        .replace(/!\[([^\]]*)\]\((?!https?:|#)([^)]+)\)/g, '![$1](https://raw.githubusercontent.com/littledot2020/codex-finish-shout/main/$2)')
         .replace(/\]\((?!https?:|#)([^)]+)\)/g, ']\(https://github.com/littledot2020/codex-finish-shout/blob/main/$1)');
 }
 fs.writeFileSync(path.join(extension, 'README.md'), '# Codex Finish Shout\n\n[English](#english) | [简体中文](#简体中文)\n\n## English\n' +

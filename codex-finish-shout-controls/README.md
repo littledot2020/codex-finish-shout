@@ -25,7 +25,7 @@ The VSIX includes the player, backend, and music. Users do not need source code,
 
 ### Music and monitoring
 
-![English project overview with ToolAI promotion](https://github.com/littledot2020/codex-finish-shout/blob/main/docs/screenshots/overview-en.png)
+![English project overview with ToolAI promotion](https://raw.githubusercontent.com/littledot2020/codex-finish-shout/main/docs/screenshots/overview-en.png)
 
 Run **Open Project Monitor** to see active projects and individual agent tasks. Search, filters and expandable history help keep current work visible. Use the overview controls to switch English/Chinese and light/dark themes.
 
@@ -98,7 +98,7 @@ VSIX 已包含播放器、后端和音乐，使用时不需要下载源码、安
 
 ### 音乐与项目监控
 
-![中文项目总览与 ToolAI 推广](https://github.com/littledot2020/codex-finish-shout/blob/main/docs/screenshots/overview-zh.png)
+![中文项目总览与 ToolAI 推广](https://raw.githubusercontent.com/littledot2020/codex-finish-shout/main/docs/screenshots/overview-zh.png)
 
 执行 **打开项目总览** 查看活动项目、主 Agent 和子 Agent；可搜索任务、筛选状态、展开历史。界面支持英文／中文和深色／浅色。
 
