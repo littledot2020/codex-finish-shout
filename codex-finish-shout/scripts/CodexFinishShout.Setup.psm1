@@ -595,8 +595,12 @@ function Test-CodexFinishOwnedRuntimeFile {
     if ($Path -match '[\\/]assets[\\/]music[\\/]' -and $SourcePath) {
         # Binary assets have no script ownership header. Only replace an
         # identical bundled asset automatically; modified files need -Force.
-        return (Get-FileHash -LiteralPath $Path -Algorithm SHA256).Hash -ceq
-            (Get-FileHash -LiteralPath $SourcePath -Algorithm SHA256).Hash
+        $hash = [Security.Cryptography.SHA256]::Create()
+        try {
+            return [Convert]::ToBase64String($hash.ComputeHash([IO.File]::ReadAllBytes($Path))) -ceq
+                [Convert]::ToBase64String($hash.ComputeHash([IO.File]::ReadAllBytes($SourcePath)))
+        }
+        finally { $hash.Dispose() }
     }
 
     $reader = $null

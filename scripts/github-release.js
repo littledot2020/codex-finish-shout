@@ -31,13 +31,24 @@ async function main() {
             body: JSON.stringify({ name: 'codex-finish-shout', description: 'Codex project monitor and offline completion music for VS Code. English / 中文. Discover AI tools at ToolAI.io.',
                 homepage: 'https://www.toolai.io/', private: false, auto_init: false }) });
         console.log(created.html_url);
-    } else if (action === 'ci') {
+    } else if (action === 'ci' || action === 'ci-failure') {
         const runs = await api(`/repos/${repo}/actions/runs?per_page=5`);
         for (const run of runs.workflow_runs) {
             console.log(JSON.stringify({ id: run.id, sha: run.head_sha.slice(0, 8), status: run.status, conclusion: run.conclusion, url: run.html_url }));
             const jobs = await api(`/repos/${repo}/actions/runs/${run.id}/jobs`);
             for (const job of jobs.jobs) console.log(JSON.stringify({ name: job.name, status: job.status, conclusion: job.conclusion,
                 steps: job.steps.filter(step => step.status !== 'queued').map(step => ({ name: step.name, status: step.status, conclusion: step.conclusion })) }));
+            if (action === 'ci-failure') {
+                for (const job of jobs.jobs.filter(job => job.conclusion === 'failure')) {
+                    const response = await fetch(`https://api.github.com/repos/${repo}/actions/jobs/${job.id}/logs`, { headers, signal: AbortSignal.timeout(60000) });
+                    if (!response.ok) throw new Error('Unable to retrieve job log: ' + response.status);
+                    const directory = path.join(__dirname, '../.dev');
+                    fs.mkdirSync(directory, { recursive: true });
+                    fs.writeFileSync(path.join(directory, `ci-${job.id}.log`), await response.text());
+                    console.log(`Saved .dev/ci-${job.id}.log`);
+                }
+                break;
+            }
         }
     } else if (action === 'release') {
         const version = require('../codex-finish-shout-controls/package.json').version;

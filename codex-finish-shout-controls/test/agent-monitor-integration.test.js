@@ -41,6 +41,12 @@ foreach ($name in @('UserPromptSubmit', 'SubagentStart', 'Stop', 'SubagentStop')
             { encoding: 'utf8', timeout: 30000, windowsHide: true });
         assert.equal(result.error, undefined);
         assert.equal(result.status, 0, result.stderr);
+        // The fixture represents one turn, not PowerShell's variable cold-start
+        // latency. Align its transcript clock with the actual child Hook time.
+        const recorded = JSON.parse(fs.readFileSync(path.join(directory, 'state', 'project-monitor.json'), 'utf8'));
+        const childTime = recorded.projects[0].sessions[0].agents.find(agent => agent.agentId === 'child-integration').startedAtUtc;
+        const aligned = fs.readFileSync(transcript, 'utf8').trim().split('\n').map(line => ({ ...JSON.parse(line), timestamp: childTime }));
+        fs.writeFileSync(transcript, aligned.map(record => JSON.stringify(record)).join('\n') + '\n');
         const snapshot = readProjectMonitorState(path.join(directory, 'state', 'project-monitor.json'));
         assert.equal(snapshot.kind, 'ready', snapshot.error);
         const project = snapshot.projects[0];
